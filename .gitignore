@@ -28,3 +28,4 @@ yarn-error.log*
 
 # db
 OpenIM_*
+*.lock

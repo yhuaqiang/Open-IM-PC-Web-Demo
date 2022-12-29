@@ -1,6 +1,7 @@
 import { BrowserRouter, HashRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Mylayout from "../layout/MyLayout";
-import Login from "../pages/login/Login";
+// import Login from "../pages/login/Login";
+import Login from "../pages/login/Login2";
 import Home from "../pages/home/Cve/cve";
 import Contacts from "../pages/home/Contact/contacts";
 import Profile from "../pages/home/Profile/Profile";
