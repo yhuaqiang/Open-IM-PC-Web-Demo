@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import md5 from "md5";
 import { login as loginApi, register, reset, sendSms, UsedFor, verifyCode } from "../../api/login";
 import { im } from "../../utils";
-import { getIMApiUrl, getIMWsUrl } from "../../config/index2";
+import { getIMApiUrl, getIMWsUrl } from "../../config";
 import { useDispatch } from "react-redux";
 import { getSelfInfo, setSelfInfo } from "../../store/actions/user";
 import { getCveList } from "../../store/actions/cve";
@@ -171,10 +171,8 @@ const Login = () => {
           const openim = res.data;
           const uid = openim.imuid ?? '';
           const token = openim.token ?? '';
-          const wssurl = openim.wssurl;
-          const apiurl = openim.apiurl;
-          localStorage.setItem("IMWsUrl", wssurl);
-          localStorage.setItem("IMApiUrl", apiurl);
+          localStorage.setItem("IMWsUrl", openim.wssurl);
+          localStorage.setItem("IMApiUrl", openim.apiurl);
           imLogin(uid, token);
         } else {
           message.error(res.msg);
