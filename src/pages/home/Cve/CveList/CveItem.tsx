@@ -78,7 +78,13 @@ const CveItem: FC<CveItemProps> = ({ cve, onClick, curCve, curUid, cveList, idx 
   };
 
   const delCve = () => {
-    im.deleteConversation(cve.conversationID)
+    let func = im.deleteConversation;
+    if (!cve.isPrivateChat && cve.isNotInGroup) {
+      func = im.deleteConversationFromLocalAndSvr;
+    } else {
+      message.info('only delete from local');
+    }
+    func.call(im, cve.conversationID)
       .then((res) => {
         const tarray = [...cveList];
         const farray = tarray.filter((c) => c.conversationID !== cve.conversationID);

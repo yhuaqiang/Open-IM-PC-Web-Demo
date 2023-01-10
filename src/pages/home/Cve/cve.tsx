@@ -152,8 +152,8 @@ const Home = () => {
 
   const sendForwardHandler = (options: string | MergerMsgParams, type: MessageType, list: SelectType[]) => {
     list.map(async (s) => {
-      const uid = (s as FriendItem).userID??"";
-      const gid = (s as GroupItem).groupID??"";
+      const uid = (s as FriendItem).userID ?? "";
+      const gid = (s as GroupItem).groupID ?? "";
       let data;
       if (type === MessageType.MERGERMESSAGE) {
         data = await im.createMergerMessage(options as MergerMsgParams);
@@ -168,17 +168,17 @@ const Home = () => {
   //  im hander
   const newMsgHandler = (data: WSEvent) => {
     console.log('newMsgHandler');
-    
+
     const newServerMsg: MessageItem = JSON.parse(data.data as string);
     handelMsg(newServerMsg)
   };
 
-  const newMsgsHandler = (data:WSEvent) => {
+  const newMsgsHandler = (data: WSEvent) => {
     const newServerMsgs: MessageItem[] = JSON.parse(data.data as string);
     newServerMsgs.forEach(handelMsg)
   }
 
-  const handelMsg = (newServerMsg:MessageItem) => {
+  const handelMsg = (newServerMsg: MessageItem) => {
     // if (newServerMsg.contentType !== MessageType.TYPINGMESSAGE && newServerMsg.sendID !== selfID) {
     //   createNotification(newServerMsg, (id, sessionType) => {
     //     assignHandler(id, sessionType);
@@ -283,6 +283,7 @@ const Home = () => {
     setImgGroup([]);
     getHistoryMsg(cve.userID, cve.groupID);
     markCveHasRead(cve);
+    console.log('clickItem', cve);
   };
 
   const getInfo = (cve: ConversationItem) => {
@@ -300,7 +301,7 @@ const Home = () => {
 
   const markCveHasRead = (cve: ConversationItem, type?: number) => {
     if (cve.unreadCount === 0 && !type) return;
-    im.markMessageAsReadByConID({conversationID: cve.conversationID,msgIDList: []})
+    im.markMessageAsReadByConID({ conversationID: cve.conversationID, msgIDList: [] })
   };
 
   const getOneCve = (sourceID: string, sessionType: number): Promise<ConversationItem> => {
@@ -313,7 +314,7 @@ const Home = () => {
 
   const getHistoryMsg = (uid?: string, gid?: string, sMsg?: MessageItem) => {
     console.log("getMsg:::");
-    
+
     const config = {
       userID: uid ?? "",
       groupID: gid ?? "",
@@ -360,7 +361,7 @@ const Home = () => {
     });
   };
 
-  const sendMsg = (nMsg: string, type: MessageType, uid?: string, gid?: string,fileArrayBuffer?:ArrayBuffer,snpFileArrayBuffer?:ArrayBuffer) => {
+  const sendMsg = (nMsg: string, type: MessageType, uid?: string, gid?: string, fileArrayBuffer?: ArrayBuffer, snpFileArrayBuffer?: ArrayBuffer) => {
     const operationID = uuid();
     if ((uid && curCve?.userID === uid) || (gid && curCve?.groupID === gid) || (!uid && !gid)) {
       const parsedMsg = JSON.parse(nMsg);
